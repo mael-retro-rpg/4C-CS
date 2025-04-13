@@ -49,7 +49,7 @@ This project is a digital character sheet for the **4C** RPG system, developed b
 | Arquivo | Descrição |
 |--------|-----------|
 | `index.html` | Página principal com a ficha interativa / Main sheet page |
-| `logo-ficha.png` | Logotipo para a ficha online / Logo for main sheet |
+| `4CPB.png` | Logotipo para a ficha online / Logo for main sheet |
 | `4CP.png` | Logotipo para impressão / Logo for print view |
 | `README.md` | Este arquivo / This file |
 
