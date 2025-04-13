@@ -9,7 +9,7 @@ This project is a digital character sheet for the **4C** RPG system, developed b
 ## 📌 Recursos / Features
 
 - Interface clara e escura, responsiva  
-- Alternância de idioma: Português / English  
+- Alternância de idioma: Português / Inglês  
 - Cálculo automático de atributos como Vitalidade, Vontade e Ficha de Combate  
 - Exportação para `.txt`  
 - Impressão estilizada em uma única página com logotipo  
