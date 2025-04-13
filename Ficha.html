@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ficha de Personagem 4C</title>
+    <style>
+            body {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            font-family: 'Arial Narrow', Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+            }
+            h1, h2, label, th {
+            color: #ffd700;
+            }
+            input[type="text"], input[type="number"], textarea {
+            background-color: #2b2b2b;
+            color: #fff;
+            border: 1px solid #555;
+            padding: 6px;
+            margin-bottom: 10px;
+            text-align: center;
+            border-radius: 8px;
+            }
+            input[type="number"] {
+            width: 3em;
+            }
+            input[type="text"] {
+            width: 100%;
+            }
+            textarea {
+            width: 100%;
+            }
+            table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            }
+            td, th {
+            padding: 8px;
+            text-align: center;
+            }
+            select, button {
+            background-color: #333;
+            color: #ffd700;
+            border: none;
+            padding: 8px 12px;
+            margin-top: 10px;
+            cursor: pointer;
+            }
+
+            @media print {
+            body {
+            background-color: white;
+            color: black;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-size: 9pt;
+            line-height: 1.1;
+            max-height: 99vh;
+            overflow: hidden;
+            }
+            h1, h2, label, th {
+            color: black;
+            }
+            select, button {
+            display: none;
+            }
+            input, textarea {
+            background-color: white !important;
+            color: black !important;
+            border: 1px solid #ccc !important;
+            }
+            @page {
+            size: A4 portrait;
+            margin: 1cm;
+            }
+      footer#rodape-ficha {
+        margin-top: 40px;
+        font-size: 12px;
+        color: #888;
+        text-align: center;
+        font-style: italic;
+      }
+            #logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+            }
+            #logo-ficha {
+            max-width: 200px;
+            height: auto;
+            }
+    </style>
+  </head>
+  <body>
+    <div id="logo-container">
+      <img
+        src="4CPB.png"
+        alt="Logotipo Ficha"
+        id="logo-ficha"
+        style="width: 100px; height: auto; margin-bottom: 20px" />
+    </div>
+
+    <h1 id="title">Ficha de Personagem 4C</h1>
+    <div>
+      <label for="langSelect">Idioma / Language:</label>
+      <select id="langSelect" onchange="toggleLang()">
+        <option value="pt">Português</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+
+    <label id="label-name">Nome:</label>
+    <input type="text" />
+    <br />
+    <label id="label-identity">Identidade:</label>
+    <input type="text" />
+
+    <table>
+      <thead>
+        <tr>
+          <th id="th-attr">Atributo</th>
+          <th id="th-value">Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="attr-off">Ataque</td>
+          <td><input type="number" id="val-off" oninput="updateCombatTotal()" /></td>
+        </tr>
+        <tr>
+          <td id="attr-tough">Resistência</td>
+          <td><input type="number" id="val-tough" oninput="updateCombatTotal()" /></td>
+        </tr>
+        <tr>
+          <td id="attr-wis">Sabedoria</td>
+          <td><input type="number" id="val-wis" oninput="updateCombatTotal()" /></td>
+        </tr>
+        <tr>
+          <td id="attr-agi">Agilidade</td>
+          <td><input type="number" id="val-agi" oninput="updateCombatTotal()" /></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th id="th-spark">Centelha</th>
+          <th id="th-spark-value">Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="spark-vit">Vitalidade</td>
+          <td><input type="number" /></td>
+        </tr>
+        <tr>
+          <td id="spark-will">Vontade</td>
+          <td><input type="number" /></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th id="th-combat">Ficha de Combate</th>
+          <th id="th-total">Total</th>
+          <th id="th-attr2">Atributo</th>
+          <th id="th-bonus">Bônus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="combat-roll">Jogada de Ataque</td>
+          <td><input type="number" id="total-roll" readonly /></td>
+          <td><input type="number" id="attr-roll" oninput="updateCombatTotal()" /></td>
+          <td><input type="number" id="bonus-roll" oninput="updateCombatTotal()" /></td>
+        </tr>
+        <tr>
+          <td id="combat-def">Defesa</td>
+          <td><input type="number" id="total-def" readonly /></td>
+          <td><input type="number" id="attr-def" oninput="updateCombatTotal()" /></td>
+          <td><input type="number" id="bonus-def" oninput="updateCombatTotal()" /></td>
+        </tr>
+        <tr>
+          <td id="combat-mres">Resistência Mágica</td>
+          <td><input type="number" id="total-mres" readonly /></td>
+          <td><input type="number" id="attr-mres" oninput="updateCombatTotal()" /></td>
+          <td><input type="number" id="bonus-mres" oninput="updateCombatTotal()" /></td>
+        </tr>
+        <tr>
+          <td id="combat-init">Iniciativa</td>
+          <td><input type="number" id="total-init" readonly /></td>
+          <td><input type="number" id="attr-init" oninput="updateCombatTotal()" /></td>
+          <td><input type="number" id="bonus-init" oninput="updateCombatTotal()" /></td>
+        </tr>
+        <tr>
+          <td id="combat-dmgp">Bônus de Dano (Físico)</td>
+          <td colspan="3"><input type="number" /></td>
+        </tr>
+        <tr>
+          <td id="combat-dmgm">Bônus de Dano (Mágico)</td>
+          <td colspan="3"><input type="number" /></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <label id="label-notes">Anotações:</label>
+    <textarea rows="10"></textarea>
+
+    <script>
+      function toggleLang() {
+        const lang = document.getElementById("langSelect").value;
+        const text = {
+          pt: {
+            title: "Ficha de Personagem 4C",
+            "label-name": "Nome:",
+            "label-identity": "Identidade:",
+            "th-attr": "Atributo",
+            "th-value": "Valor",
+            "attr-off": "Ataque",
+            "attr-tough": "Resistência",
+            "attr-wis": "Sabedoria",
+            "attr-agi": "Agilidade",
+            "th-spark": "Centelha",
+            "th-spark-value": "Valor",
+            "spark-vit": "Vitalidade",
+            "spark-will": "Vontade",
+            "th-combat": "Ficha de Combate",
+            "th-total": "Total",
+            "th-attr2": "Atributo",
+            "th-bonus": "Bônus",
+            "combat-roll": "Jogada de Ataque",
+            "combat-def": "Defesa",
+            "combat-mres": "Resistência Mágica",
+            "combat-init": "Iniciativa",
+            "combat-dmgp": "Bônus de Dano (Físico)",
+            "combat-dmgm": "Bônus de Dano (Mágico)",
+            "label-notes": "Anotações:"
+          },
+          en: {
+            title: "4C Character Sheet",
+            "label-name": "Name:",
+            "label-identity": "Role Identity:",
+            "th-attr": "Attribute",
+            "th-value": "Value",
+            "attr-off": "Offense",
+            "attr-tough": "Toughness",
+            "attr-wis": "Wisdom",
+            "attr-agi": "Agility",
+            "th-spark": "Spark",
+            "th-spark-value": "Value",
+            "spark-vit": "Vitality",
+            "spark-will": "Willpower",
+            "th-combat": "Combat Sheet",
+            "th-total": "Total",
+            "th-attr2": "Attribute",
+            "th-bonus": "Bonus",
+            "combat-roll": "Attack Roll",
+            "combat-def": "Defense",
+            "combat-mres": "Magic Resistance",
+            "combat-init": "Initiative",
+            "combat-dmgp": "Damage Bonus (Physical)",
+            "combat-dmgm": "Damage Bonus (Magical)",
+            "label-notes": "Notes:"
+          }
+        };
+        const t = text[lang];
+        for (const id in t) {
+          const el = document.getElementById(id);
+          if (el) el.innerText = t[id];
+        }
+      }
+
+      function updateCombatTotal() {
+        const rows = ["roll", "def", "mres", "init"];
+        rows.forEach((key) => {
+          const attrEl = document.getElementById(`attr-${key}`);
+          const bonusEl = document.getElementById(`bonus-${key}`);
+          const totalEl = document.getElementById(`total-${key}`);
+
+          if (!attrEl || !bonusEl || !totalEl) return;
+
+          const attr = parseInt(attrEl.value) || 0;
+          const bonus = parseInt(bonusEl.value) || 0;
+
+          let extra = 0;
+          if (key === "def" || key === "mres") extra = 4;
+          else if (key === "init") extra = 2;
+
+          totalEl.value = attr + bonus + extra;
+        });
+        updateVitalAndWill();
+      }
+
+      function abrirFichaParaImpressao() {
+        const nome = document.querySelector("#label-name + input")?.value || "";
+        const identidade = document.querySelector("#label-identity + input")?.value || "";
+        const ataque = document.getElementById("val-off")?.value || "";
+        const resistencia = document.getElementById("val-tough")?.value || "";
+        const sabedoria = document.getElementById("val-wis")?.value || "";
+        const agilidade = document.getElementById("val-agi")?.value || "";
+        const vitalidade = document.querySelector("#spark-vit + td input")?.value || "";
+        const vontade = document.querySelector("#spark-will + td input")?.value || "";
+        const notas = document.querySelector("textarea")?.value || "";
+
+        const lang = document.getElementById("langSelect")?.value || "pt";
+
+        const text = {
+          pt: {
+            title: "Ficha de Personagem 4C",
+            nome: "Nome",
+            identidade: "Identidade",
+            atributos: "Atributos",
+            ataque: "Ataque",
+            resistencia: "Resistência",
+            sabedoria: "Sabedoria",
+            agilidade: "Agilidade",
+            centelhas: "Centelhas",
+            vitalidade: "Vitalidade",
+            vontade: "Vontade",
+            fichaCombate: "Ficha de Combate",
+            anotacoes: "Anotações",
+            roll: "Jogada de Ataque",
+            def: "Defesa",
+            mres: "Resistência Mágica",
+            init: "Iniciativa",
+            dmgFisico: "Bônus de Dano (Físico)",
+            dmgMagico: "Bônus de Dano (Mágico)"
+          },
+          en: {
+            title: "4C Character Sheet",
+            nome: "Name",
+            identidade: "Role Identity",
+            atributos: "Attributes",
+            ataque: "Offense",
+            resistencia: "Toughness",
+            sabedoria: "Wisdom",
+            agilidade: "Agility",
+            centelhas: "Spark",
+            vitalidade: "Vitality",
+            vontade: "Willpower",
+            fichaCombate: "Combat Sheet",
+            anotacoes: "Notes",
+            roll: "Attack Roll",
+            def: "Defense",
+            mres: "Magic Resistance",
+            init: "Initiative",
+            dmgFisico: "Damage Bonus (Physical)",
+            dmgMagico: "Damage Bonus (Magical)"
+          }
+        }[lang];
+
+        const combate = ["roll", "def", "mres", "init"].map((key) => {
+          const attr = parseInt(document.getElementById(`attr-${key}`)?.value || 0);
+          const bonus = parseInt(document.getElementById(`bonus-${key}`)?.value || 0);
+          const extra = key === "def" || key === "mres" ? 4 : key === "init" ? 2 : 0;
+          const total = attr + bonus + extra;
+
+          return {
+            label: text[key],
+            total,
+            attr,
+            bonus,
+            extra
+          };
+        });
+
+        const dmgFisico = document.querySelector("#combat-dmgp + td input")?.value || "";
+        const dmgMagico = document.querySelector("#combat-dmgm + td input")?.value || "";
+
+        const win = window.open("", "_blank");
+        win.document.write(
+          "<html><head><title>Ficha para Impressão</title><style>body{font-family:'Arial Narrow', Arial, sans-serif;line-height:1.2;margin:20px;text-align:center;}h1{text-align:center;}p{margin:6px 0;}</style></head><body>"
+        );
+        win.document.write(
+          '<div style="text-align:center;"><img src="4CP.png" alt="Logotipo Impressão" style="max-width:100px; height:auto; margin-bottom: 20px;"></div>'
+        );
+        win.document.write(`<h1>${text.title}</h1>`);
+        win.document.write(`<p><strong>${text.nome}:</strong> ${nome}</p>`);
+        win.document.write(`<p><strong>${text.identidade}:</strong> ${identidade}</p>`);
+        win.document.write(`<h3>${text.atributos}</h3>`);
+        win.document.write(`<p>${text.ataque}: ${ataque}</p>`);
+        win.document.write(`<p>${text.resistencia}: ${resistencia}</p>`);
+        win.document.write(`<p>${text.sabedoria}: ${sabedoria}</p>`);
+        win.document.write(`<p>${text.agilidade}: ${agilidade}</p>`);
+        win.document.write(`<h3>${text.centelhas}</h3>`);
+        win.document.write(`<p>${text.vitalidade}: ${vitalidade}</p>`);
+        win.document.write(`<p>${text.vontade}: ${vontade}</p>`);
+        win.document.write(`<h3>${text.fichaCombate}</h3>`);
+        combate.forEach((row) => {
+          win.document.write(
+            `<p><strong>${row.label}:</strong> ${row.total} = ${row.attr} + ${row.bonus}${row.extra ? " + " + row.extra : ""}</p>`
+          );
+        });
+
+        // Essas linhas agora estão fora do forEach — correto!
+        win.document.write(`<p><strong>${text.dmgFisico}:</strong> ${dmgFisico}</p>`);
+        win.document.write(`<p><strong>${text.dmgMagico}:</strong> ${dmgMagico}</p>`);
+        win.document.write(`<h3>${text.anotacoes}</h3>`);
+        win.document.write(`<p>${notas.replace(/\n/g, "<br>")}</p>`);
+        win.document.write(
+          `<footer style="margin-top: 40px; font-size: 10px; color: #555;">4C System • By Ismael “Mael” Spinelli • https://www.twitch.tv/mael_retro_rpg</footer>`
+        );
+        win.document.write("</body></html>");
+        win.document.close();
+        win.print();
+      }
+    </script>
+
+    <div style="margin-top: 30px; text-align: center">
+      <button onclick="exportToTxt()" title="Exportar como TXT / Export as TXT">📄</button>
+      <button onclick="abrirFichaParaImpressao()" title="Imprimir Ficha / Print Sheet">🖨️</button>
+    </div>
+
+    <footer id="rodape-ficha">
+      4C System • By Ismael “Mael” Spinelli •
+      <a href="https://www.maelrpg.com" target="_blank" style="color: inherit">www.maelrpg.com</a>
+    </footer>
+
+    <script>
+      function updateVitalAndWill() {
+        const resistencia = parseInt(document.getElementById("val-tough")?.value) || 0;
+        const sabedoria = parseInt(document.getElementById("val-wis")?.value) || 0;
+        document.querySelector("#spark-vit + td input").value = 10 + Math.floor(resistencia / 2);
+        document.querySelector("#spark-will + td input").value = 10 + Math.floor(sabedoria / 2);
+      }
+
+      function updateCombatTotal() {
+        const rows = ["roll", "def", "mres", "init"];
+        rows.forEach((key) => {
+          const attrEl = document.getElementById(`attr-${key}`);
+          const bonusEl = document.getElementById(`bonus-${key}`);
+          const totalEl = document.getElementById(`total-${key}`);
+
+          if (!attrEl || !bonusEl || !totalEl) return;
+
+          const attr = parseInt(attrEl.value) || 0;
+          const bonus = parseInt(bonusEl.value) || 0;
+
+          let extra = 0;
+          if (key === "def" || key === "mres") extra = 4;
+          else if (key === "init") extra = 2;
+
+          totalEl.value = attr + bonus + extra;
+        });
+        updateVitalAndWill();
+      }
+
+      function exportToTxt() {
+        let output = "";
+        output += `Nome: ${document.querySelector("#label-name + input")?.value || ""}\n`;
+        output += `Identidade: ${document.querySelector("#label-identity + input")?.value || ""}\n\n`;
+        output += `Atributos:\n`;
+        output += `- Ataque: ${document.getElementById("val-off")?.value || ""}\n`;
+        output += `- Resistência: ${document.getElementById("val-tough")?.value || ""}\n`;
+        output += `- Sabedoria: ${document.getElementById("val-wis")?.value || ""}\n`;
+        output += `- Agilidade: ${document.getElementById("val-agi")?.value || ""}\n\n`;
+        output += `Centelhas:\n`;
+        output += `- Vitalidade: ${document.querySelector("#spark-vit + td input")?.value || ""}\n`;
+        output += `- Vontade: ${document.querySelector("#spark-will + td input")?.value || ""}\n\n`;
+        output += `Ficha de Combate:\n`;
+        ["roll", "def", "mres", "init"].forEach((key) => {
+          const label = document.getElementById(`combat-${key}`)?.innerText || key;
+          const attr = parseInt(document.getElementById(`attr-${key}`)?.value || 0);
+          const bonus = parseInt(document.getElementById(`bonus-${key}`)?.value || 0);
+          const extra = key === "def" || key === "mres" ? 4 : key === "init" ? 2 : 0;
+          const total = attr + bonus + extra;
+          const extraText = extra ? ` + ${extra}` : "";
+          output += `- ${label}: ${total} = ${attr} + ${bonus}${extraText}\n`;
+        });
+        output += `- Bônus de Dano (Físico): ${document.querySelector("#combat-dmgp + td input")?.value || ""}\n`;
+        output += `- Bônus de Dano (Mágico): ${document.querySelector("#combat-dmgm + td input")?.value || ""}\n\n`;
+        output += `Anotações:\n${document.querySelector("textarea")?.value || ""}\n`;
+
+        const blob = new Blob([output], { type: "text/plain" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "ficha_4c.txt";
+        link.click();
+      }
+    </script>
+  </body>
+</html>
